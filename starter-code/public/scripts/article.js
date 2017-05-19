@@ -1,3 +1,4 @@
+
 'use strict';
 var app = app || {};
 
@@ -7,7 +8,7 @@ var app = app || {};
 // Give the IIFE a parameter called 'module'.
 // At the very end of the code, but still inside the IIFE, attach the 'Article' object to 'module'.
 // Where the IIFE is invoked, pass in the global 'app' object that is defined above.
-function Article(rawDataObj) {
+(function(module) { function Article(rawDataObj) {
   /* REVIEW: In lab 8, we explored a lot of new functionality going on here. Let's re-examine
   the concept of context.
   Normally, "this" inside of a constructor function refers to the newly instantiated object.
@@ -22,14 +23,14 @@ function Article(rawDataObj) {
   Object.keys(rawDataObj).forEach(key => this[key] = rawDataObj[key]);
 }
 
-Article.all = [];
+  Article.all = [];
 
-Article.prototype.toHtml = function() {
+  Article.prototype.toHtml = function() {
   var template = Handlebars.compile($('#article-template').text());
 
-  this.daysAgo = parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000);
-  this.publishStatus = this.publishedOn ? `published ${this.daysAgo} days ago` : '(draft)';
-  this.body = marked(this.body);
+    this.daysAgo = parseInt((new Date() - new Date(this.publishedOn))/60/60/24/1000);
+    this.publishStatus = this.publishedOn ? `published ${this.daysAgo} days ago` : '(draft)';
+    this.body = marked(this.body);
 
   return template(this);
 };
@@ -90,8 +91,8 @@ Article.truncateTable = callback => {
     method: 'DELETE',
   })
   .then(console.log) // REVIEW: Check out this clean syntax for just passing 'assumed' data into a named function!
-                     // The reason we can do this has to do with the way Promise.prototype.then works. It's a little
-                     // outside the scope of 301 material, but feel free to research!
+  // The reason we can do this has to do with the way Promise.prototype.then works. It's a little
+  // outside the scope of 301 material, but feel free to research!
   .then(callback);
 };
 
@@ -127,4 +128,5 @@ Article.prototype.updateRecord = function(callback) {
   })
   .then(console.log)
   .then(callback);
-};
+}
+}, []);
