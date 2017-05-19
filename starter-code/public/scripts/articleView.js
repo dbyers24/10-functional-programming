@@ -149,5 +149,5 @@ articleView.initAdminPage = function() {
   $('#blog-stats .words').text(app.Article.numWordsAll());
 
 };
-module.articleView = articleView;
+  module.articleView = articleView;
 }(app))
