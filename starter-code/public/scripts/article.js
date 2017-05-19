@@ -44,6 +44,11 @@ var app = app || {};
     // of functions. So if we set a variable equal to the result of a .map, it will be our transformed array.
     // There is no need to push to anything.
 
+    rawData.map(function(data) {
+      return app.Article.all.push(new Article(data));
+    });
+
+
     /* OLD forEach():
     rawData.forEach(function(ele) {
     Article.all.push(new Article(ele));
