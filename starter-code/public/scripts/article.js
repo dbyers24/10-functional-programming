@@ -1,6 +1,7 @@
 
 
 
+
 'use strict';
 var app = app || {};
 
@@ -51,7 +52,7 @@ var app = app || {};
       return new Article(article);
     });
 
-
+    
     /* OLD forEach():
     rawData.forEach(function(ele) {
     Article.all.push(new Article(ele));
@@ -72,8 +73,8 @@ Article.fetchAll = callback => {
 
 // TODO: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
 Article.numWordsAll = () => {
-  return Article.all.map(function(articleWordCount) {
-    return articleWordCount.body.split(' ')})
+  return Article.all.map(function(article) {
+    return article.body.split(' ');})
     .reduce(function(acc, current) {
       return acc + current;
     }).length
