@@ -1,5 +1,6 @@
 
 
+
 'use strict';
 var app = app || {};
 
@@ -45,8 +46,9 @@ var app = app || {};
     // of functions. So if we set a variable equal to the result of a .map, it will be our transformed array.
     // There is no need to push to anything.
 
-    rawData.map(function(data) {
-      return app.Article.all.push(new Article(data));
+
+    Article.all = rows.map(function(article) {
+      return new Article(article);
     });
 
 
@@ -71,16 +73,16 @@ Article.fetchAll = callback => {
 // TODO: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
 Article.numWordsAll = () => {
   return Article.all.map(function(articleWordCount) {
-    articleWordCount.body.split(' ').length})
+    return articleWordCount.body.split(' ')})
     .reduce(function(acc, current) {
       return acc + current;
-    })
+    }).length
   };
 
   // TODO: Chain together a `map` and a `reduce` call to produce an array of unique author names. You will
   // probably need to use the optional accumulator argument in your reduce call.
   Article.allAuthors = () => {
-    return Article.all.map(function(currentAricle) {
+    return Article.all.map(function(currentArticle) {
       return currentArticle.author;
     }).reduce(function(acc, currentAuthor) {
       if (acc.indexOf(currentAuthor) < 0 ) {
@@ -99,7 +101,18 @@ Article.numWordsAll = () => {
       // The first property should be pretty straightforward, but you will need to chain
       // some combination of filter, map, and reduce to get the value for the second
       // property.
-
+      let data  = Article.all.filter(function(article) {
+        if (article.author === author) {
+          return article;
+        }
+      }).map(function(article) {
+        return article.body.split(' ').length;
+      }).reduce(function(acc, curr) {
+        return acc + curr;
+      })
+      return {author: author,
+        data: data,
+      }
     })
   };
 
@@ -149,4 +162,4 @@ Article.numWordsAll = () => {
 
   }
   module.Article = Article;
-})(app);
+}(app))
