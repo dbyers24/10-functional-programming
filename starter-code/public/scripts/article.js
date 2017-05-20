@@ -70,7 +70,7 @@ Article.fetchAll = callback => {
 // TODO: Chain together a `map` and a `reduce` call to get a rough count of all words in all articles.
   Article.numWordsAll = () => {
     return Article.all.map(function(articleWordCount) {
-      articleWordCount.split(' ').length})
+      articleWordCount.body.split(' ').length})
       .reduce(function(acc, current) {
         acc + current
       } )
